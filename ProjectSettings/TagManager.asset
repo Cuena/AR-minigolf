@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovementPlane
   - hole
+  - field
   layers:
   - Default
   - TransparentFX

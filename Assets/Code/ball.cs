@@ -35,6 +35,7 @@ public class ball : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = 60;
+        this.Restart0();
         
     }
 
@@ -43,7 +44,7 @@ public class ball : MonoBehaviour
     {
         if (golfball.transform.position.y < -1)
         {
-            this.Restart();
+            this.Restart0();
         }
         float velX = CrossPlatformInputManager.GetAxis("Horizontal");
         Rotate(velX);
@@ -51,12 +52,12 @@ public class ball : MonoBehaviour
         {
             if (CrossPlatformInputManager.GetButtonDown("hit"))
             {
-                Debug.Log("pressed");
+                //Debug.Log("pressed");
                 isPressed = true;
             }
             if (CrossPlatformInputManager.GetButtonUp("hit"))
             {
-                Debug.Log("released");
+                //Debug.Log("released");
                 isPressed = false;
                 Hit(power.GetPowerNormalized());
                 power.Reset();
@@ -73,19 +74,28 @@ public class ball : MonoBehaviour
         }
     }
 
+    void FixedUpdate() 
+    { 
+        if (golfball.velocity.magnitude < 0.1f) golfball.velocity = Vector3.zero; 
+    }
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.tag == "hole")
         {
             Debug.Log("HOOOOLE");
-            nStrokes = 0;
+            //nStrokes = 0;
             strokesT.text = nStrokes.ToString();
+            AudioManagerB.PlaySound("hole");
             holeEffect.Play();
+            LevelManager.instance.nextLevel();
         }
+
     }
 
     public void Hit(float f)
     {
+        AudioManagerB.PlaySound("hit");
         golfball.AddForce(transform.forward * f, ForceMode.Impulse);
         nStrokes++;
         strokesT.text = nStrokes.ToString();
@@ -97,18 +107,28 @@ public class ball : MonoBehaviour
     //    golfball.MovePosition(transform.position + transform.forward * Time.deltaTime * 50 * value);
     //}
 
+
+
     public void Restart()
     {
         //StopCoroutine(coroutine);
         golfball.velocity = Vector3.zero;
         golfball.angularVelocity = Vector3.zero;
         golfball.transform.rotation = Quaternion.identity;
-        transform.position = reference.position + new Vector3(0, 0.3f, 0.5f);
         arrowRenderer.enabled = true;
         isMoving = false;
     }
 
+    public void Restart0()
+    {
+        this.Restart();
+        transform.position = reference.position + new Vector3(0, 0.3f, 0.5f);
+    }
 
+    public void setReference(Transform t)
+    {
+        this.reference = t;
+    }
 
     void Rotate(float value)
     {
@@ -124,11 +144,9 @@ public class ball : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        golfball.velocity = Vector3.zero;
-        golfball.angularVelocity = Vector3.zero;
-        golfball.transform.rotation = Quaternion.identity;
-        arrowRenderer.enabled = true;
-        isMoving = false;
+        transform.position = transform.position + new Vector3(0, 0.04f, 0);
+        Restart();
+       
 
     }
 
