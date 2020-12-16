@@ -15,11 +15,6 @@ public class AudioManagerB : MonoBehaviour
         audioSrc = GetComponent<AudioSource>();  
     }
 
-    void Update()
-    {
-        
-    }
-
     public static void PlaySound(string clip)
     {
         switch (clip)

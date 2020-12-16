@@ -7,7 +7,6 @@ public class ball : MonoBehaviour
 {
 
     private Rigidbody golfball;
-    public float maxForce, multForce;
     public float rotationV = 30, rotationSpeed = 110;
     public MeshRenderer arrowRenderer;
     public Transform reference;
@@ -18,7 +17,6 @@ public class ball : MonoBehaviour
     public ParticleSystem holeEffect;
     public Text strokesT;
     private int nStrokes;
-    //private IEnumerator coroutine;
 
     public float force = 1;
     
@@ -39,7 +37,6 @@ public class ball : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (golfball.transform.position.y < -1)
@@ -83,12 +80,17 @@ public class ball : MonoBehaviour
 
         if (other.tag == "hole")
         {
-            Debug.Log("HOOOOLE");
+            Debug.Log("HOLEE");
             //nStrokes = 0;
             strokesT.text = nStrokes.ToString();
             AudioManagerB.PlaySound("hole");
             holeEffect.Play();
             LevelManager.instance.nextLevel();
+        }
+        if (other.tag == "end")
+        {
+            UIManager.instance.endGame(nStrokes);
+            //nStrokes = 0;
         }
 
     }
@@ -102,13 +104,6 @@ public class ball : MonoBehaviour
         StartCoroutine(go());
     }
    
-    //void Move(float value)
-    //{
-    //    golfball.MovePosition(transform.position + transform.forward * Time.deltaTime * 50 * value);
-    //}
-
-
-
     public void Restart()
     {
         //StopCoroutine(coroutine);
@@ -118,7 +113,6 @@ public class ball : MonoBehaviour
         arrowRenderer.enabled = true;
         isMoving = false;
     }
-
     public void Restart0()
     {
         this.Restart();

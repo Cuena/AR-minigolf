@@ -12,16 +12,16 @@ public class LevelManager : MonoBehaviour
     public GameObject[] levelDatas;
 
     public ball b;
-    
+
 
     public GameObject[] GameObjects { get { return levelDatas; } }
 
     private int shotCount = 0;
 
-    
+
     void Awake()
     {
-        if (instance ==null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
     }
 
     public void nextLevel()
-    {   
+    {
         levelDatas[currentLevel].SetActive(false);
         currentLevel++;
         levelDatas[currentLevel].SetActive(true);
@@ -68,6 +68,6 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
