@@ -36,7 +36,8 @@ public class LevelManager : MonoBehaviour
         currentLevel = 0;
         levelDatas[currentLevel].SetActive(true);
         b.setReference(levelDatas[currentLevel].transform.GetChild(0));
-
+        b.Restart0();
+        
 
     }
 

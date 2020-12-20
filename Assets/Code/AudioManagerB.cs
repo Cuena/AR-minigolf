@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class AudioManagerB : MonoBehaviour
 {
-    
+    public static AudioManagerB instance;
     public static AudioClip hitSound, bounceSound;
     static AudioSource audioSrc;
-    
+
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         hitSound = Resources.Load<AudioClip>("hit");

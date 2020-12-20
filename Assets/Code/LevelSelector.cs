@@ -5,8 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelector : MonoBehaviour
 {
-   public void levelOneLoader()
+
+    public static LevelSelector instance;
+
+    void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void levelOneLoader()
+    {
+        
         SceneManager.LoadScene("TourScene");
     }
     public void builderLoader()
@@ -15,10 +30,11 @@ public class LevelSelector : MonoBehaviour
     }
     public void scoreLoader()
     {
-
+        SceneManager.LoadScene("Ranking");
     }
     public void goHome()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("LevelSelection");
     }
 }

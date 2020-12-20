@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0;
         mainUI.SetActive(false);
         endMenu.SetActive(true);
-        scoreBox.text = strokes.ToString();    
+        scoreBox.text = strokes.ToString();
+ 
+
     }
 }
